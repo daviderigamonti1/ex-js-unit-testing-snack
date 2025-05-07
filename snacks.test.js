@@ -1,4 +1,4 @@
-const { getInitials, createSlug } = require("./snacks.js");
+const { getInitials, createSlug, average } = require("./snacks.js");
 // 🏆 Snack 1
 // Creare un test che verifichi la seguente descrizione:
 // 👉 "La funzione getInitials restituisce le iniziali di un nome completo."
@@ -20,6 +20,11 @@ test('La funzione createSlug restituisce una stringa in lowercase', () => {
 // 🏆 Snack 3
 // Creare un test che verifichi la seguente descrizione:
 // 👉 "La funzione average calcola la media aritmetica di un array di numeri."
+
+test('La funzione average calcola la media aritmetica di un array di numeri', () => {
+    expect(average([1, 2, 3, 4, 5])).toBe(3);
+    expect(() => average([10, "ciao"])).toThrow();
+})
 
 // 🏆 Snack 4
 // Creare un test che verifichi la seguente descrizione:

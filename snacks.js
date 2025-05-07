@@ -7,4 +7,16 @@ function createSlug(string) {
     return string.toLowerCase();
 }
 
-module.exports = { getInitials, createSlug }
+function average(num) {
+    num.forEach(n => {
+        if (isNaN(n)) {
+            throw new Error("Average vuole solo numeri.");
+        }
+    })
+    const sum = num.reduce((acc, curr) => {
+        return acc + curr;
+    })
+    return sum / num.length;
+}
+
+module.exports = { getInitials, createSlug, average }
