@@ -17,21 +17,22 @@ describe('Manipolazione di stringhe', () => {
     });
 });
 
+let posts;
+
+beforeEach(() => {
+    posts = [
+        { id: 1, title: "Introduzione a Javascript", slug: "introduzione-a-javascript" },
+        { id: 2, title: "React Hooks", slug: "react-hooks" }
+    ];
+});
+
+
 describe('Operazioni su Array', () => {
 
     // 🏆 Snack 3
     test('La funzione average calcola la media aritmetica di un array di numeri', () => {
         expect(average([1, 2, 3, 4, 5])).toBe(3);
         expect(() => average([10, "ciao"])).toThrow();
-    });
-
-    let posts;
-
-    beforeEach(() => {
-        posts = [
-            { id: 1, title: "Introduzione a Javascript", slug: "introduzione-a-javascript" },
-            { id: 2, title: "React Hooks", slug: "react-hooks" }
-        ];
     });
 
     // 🏆 Snack 7
@@ -76,4 +77,11 @@ describe('Generazione di Slug', () => {
         expect(() => createSlug("")).toThrow("Titolo non valido");
         expect(() => createSlug(null)).toThrow("Titolo non valido");
     });
+
+    // 🎯 Snack 10 (Bonus)
+    test('Se viene passato un array di post come secondo argomento, la funzione createSlug incrementa di 1 se lo slug esiste già', () => {
+        expect(createSlug("React Hooks", posts)).toBe("react-hooks-1");
+        addPost(posts, { id: 3, title: "React Hooks", slug: createSlug("React Hooks", posts) });
+        expect(posts[posts.length - 1].slug).toBe("react-hooks-1");
+    })
 })

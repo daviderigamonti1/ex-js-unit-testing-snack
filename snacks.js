@@ -3,11 +3,20 @@ function getInitials(nomeCompleto) {
     return `${nome.charAt(0).toUpperCase()} ${cognome.charAt(0).toUpperCase()}`;
 }
 
-function createSlug(string) {
+function createSlug(string, posts) {
     if (!string) {
         throw new Error("Titolo non valido");
     }
-    return string.toLowerCase().replaceAll(" ", "-");
+    let slug = string.toLowerCase().replaceAll(" ", "-");
+    if (posts) {
+        for (let i = 0; i < posts.length; i++) {
+            const post = posts[i];
+            if (post.slug === slug) {
+                return slug + '-1';
+            }
+        }
+    }
+    return slug;
 }
 
 function average(num) {
