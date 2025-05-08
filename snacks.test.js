@@ -1,93 +1,77 @@
-const { getInitials, createSlug, average, isPalindrome, findPostById } = require("./snacks.js");
-// 🏆 Snack 1
-// Creare un test che verifichi la seguente descrizione:
-// 👉 "La funzione getInitials restituisce le iniziali di un nome completo."
+const { getInitials, createSlug, average, isPalindrome, findPostById, addPost, removePost } = require("./snacks.js");
 
-test('La funzione getInitials restituisce le iniziali di un nome completo', () => {
-    expect(getInitials("Mario Rossi")).toBe("M R");
-    expect(getInitials("giuseppe bianchi")).toBe("G B");
-    expect(getInitials("Maria  Verdi")).toBe("M V");
+describe('Manipolazione di stringhe', () => {
+
+    // 🏆 Snack 1
+    test('La funzione getInitials restituisce le iniziali di un nome completo', () => {
+        expect(getInitials("Mario Rossi")).toBe("M R");
+        expect(getInitials("giuseppe bianchi")).toBe("G B");
+        expect(getInitials("Maria  Verdi")).toBe("M V");
+    });
+
+    // 🏆 Snack 5
+    test('La funzione isPalindrome verifica se una stringa è un palindromo', () => {
+        expect(isPalindrome("otto")).toBeTruthy();
+        expect(isPalindrome("ciao")).toBeFalsy();
+        expect(isPalindrome("Anna")).toBeTruthy();
+    });
 });
 
-// 🏆 Snack 2
-// Creare un test che verifichi la seguente descrizione:
-// 👉 "La funzione createSlug restituisce una stringa in lowercase."
+describe('Operazioni su Array', () => {
 
-test('La funzione createSlug restituisce una stringa in lowercase', () => {
-    expect(createSlug("Stringa Da Trasformare")).toBe("stringa-da-trasformare");
+    // 🏆 Snack 3
+    test('La funzione average calcola la media aritmetica di un array di numeri', () => {
+        expect(average([1, 2, 3, 4, 5])).toBe(3);
+        expect(() => average([10, "ciao"])).toThrow();
+    });
+
+    let posts;
+
+    beforeEach(() => {
+        posts = [
+            { id: 1, title: "Introduzione a Javascript", slug: "introduzione-a-javascript" },
+            { id: 2, title: "React Hooks", slug: "react-hooks" }
+        ];
+    });
+
+    // 🏆 Snack 7
+    test('La funzione findPostById restituisce il post corretto dato l’array di post e l’id', () => {
+        expect(findPostById(posts, 2)).toEqual({ id: 2, title: "React Hooks", slug: "react-hooks" });
+        expect(findPostById(posts, 3)).toBe(null);
+        expect(() => findPostById(posts, "ciao")).toThrow('"ciao" non è un id');
+        expect(() => findPostById([3, 6, 9], 2)).toThrow('L\'array posts non è nel formato corretto.');
+    });
+
+    // 🎯 Snack 8(Bonus)
+    test('Dopo aver aggiunto un post con la funzione addPost, l\'array posts deve contenere un elemento in più', () => {
+        addPost(posts, { id: 3, title: "Introduzione a Typescript", slug: "introduzione-a-typescript" });
+        expect(posts).toHaveLength(3);
+    })
+
+    test('Dopo aver rimosso un post con la funzione removePost, l\'array posts deve contenere un elemento in meno', () => {
+        removePost(posts, 2);
+        expect(posts).toHaveLength(1);
+    })
 });
 
-// 🏆 Snack 3
-// Creare un test che verifichi la seguente descrizione:
-// 👉 "La funzione average calcola la media aritmetica di un array di numeri."
+describe('Generazione di Slug', () => {
+    // 🏆 Snack 2
+    test('La funzione createSlug restituisce una stringa in lowercase', () => {
+        expect(createSlug("Stringa Da Trasformare")).toBe("stringa-da-trasformare");
+    });
 
-test('La funzione average calcola la media aritmetica di un array di numeri', () => {
-    expect(average([1, 2, 3, 4, 5])).toBe(3);
-    expect(() => average([10, "ciao"])).toThrow();
-});
+    // 🏆 Snack 4
+    test('La funzione createSlug sostituisce gli spazi con -', () => {
+        expect(createSlug("Questo è un test")).toBe("questo-è-un-test");
+    });
 
-// 🏆 Snack 4
-// Creare un test che verifichi la seguente descrizione:
-// 👉 "La funzione createSlug sostituisce gli spazi con -."
-// 📌 Esempi:
-// createSlug("Questo è un test") → "questo-e-un-test"
+    // 🏆 Snack 6
+    test('La funzione createSlug lancia un errore se il titolo è vuoto o non valido', () => {
+        expect(() => createSlug("")).toThrow("Titolo non valido");
+        expect(() => createSlug(null)).toThrow("Titolo non valido");
+    });
+})
 
-test('La funzione createSlug sostituisce gli spazi con -', () => {
-    expect(createSlug("Questo è un test")).toBe("questo-è-un-test");
-});
-
-// 🏆 Snack 5
-// Creare un test che verifichi la seguente descrizione:
-// 👉 "La funzione isPalindrome verifica se una stringa è un palindromo."
-// 📌 Nota: una stringa palindroma è una sequenza di caratteri che si legge uguale sia da sinistra a destra che da destra a sinistra.
-
-test('La funzione isPalindrome verifica se una stringa è un palindromo', () => {
-    expect(isPalindrome("otto")).toBeTruthy();
-    expect(isPalindrome("ciao")).toBeFalsy();
-    expect(isPalindrome("Anna")).toBeTruthy();
-});
-
-// 🏆 Snack 6
-// Creare un test che verifichi la seguente descrizione:
-// 👉 "La funzione createSlug lancia un errore se il titolo è vuoto o non valido."
-
-test('La funzione createSlug lancia un errore se il titolo è vuoto o non valido', () => {
-    expect(() => reateSlug("")).toThrow();
-    expect(() => reateSlug(null)).toThrow();
-});
-
-// 🏆 Snack 7
-// Crea un array di oggetti posts, in cui ogni oggetto ha le proprietà id, title e slug.
-// Creare un test che verifichi le seguenti descrizioni:
-// 👉 "La funzione findPostById restituisce il post corretto dato l’array di post e l’id"
-
-const posts = [
-    { id: 1, title: "Introduzione a Javascript", slug: "introduzione-a-javascript" },
-    { id: 2, title: "React Hooks", slug: "react-hooks" }
-];
-
-test('La funzione findPostById restituisce il post corretto dato l’array di post e l’id', () => {
-    expect(findPostById(posts, 2)).toEqual({ id: 2, title: "React Hooks", slug: "react-hooks" });
-    expect(findPostById(posts, 3)).toBe(null);
-    expect(() => findPostById(posts, "ciao")).toThrow('"ciao" non è un id');
-    expect(() => findPostById([3, 6, 9], 2)).toThrow('L\'array posts non è nel formato corretto.');
-});
-
-// Creare uno o più test aggiuntivi che controllino che la struttura dati passati sia conforme(ogni post ha le proprietà id, title e slug, viene passato un id numerico).
-
-
-// 🏆 Challenge: describe() - organizzazione dei test
-// Organizza i test in describe() raggruppandoli per argomento.
-// 🎯 Snack 8(Bonus)
-// Creare due test che verifichino le seguenti descrizioni:
-
-// 👉 "Dopo aver aggiunto un post con la funzione addPost, l'array posts deve contenere un elemento in più."
-
-// 👉 "Dopo aver rimosso un post con la funzione removePost, l'array posts deve contenere un elemento in meno."
-
-// 📌 Note:
-
-// Si consiglia di resettare l'array di post dopo ogni test. Ti ricordi come si fa?
 // 🎯 Snack 9(Bonus)
 // Creare un test che verifichi la seguente descrizione:
 

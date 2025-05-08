@@ -32,8 +32,8 @@ function findPostById(posts, id) {
         throw new Error(`"${id}" non è un id`);
     }
     posts.forEach(post => {
-        if (post.id === undefined,
-            post.title === undefined,
+        if (post.id === undefined ||
+            post.title === undefined ||
             post.slug === undefined
         ) {
             throw new Error('L\'array posts non è nel formato corretto.')
@@ -42,4 +42,13 @@ function findPostById(posts, id) {
     return posts.find(post => id === post.id) || null;
 }
 
-module.exports = { getInitials, createSlug, average, isPalindrome, findPostById }
+function addPost(posts, post) {
+    posts.push(post);
+}
+
+function removePost(posts, id) {
+    const index = posts.findIndex(p => p.id === id);
+    posts.splice(index, 1);
+}
+
+module.exports = { getInitials, createSlug, average, isPalindrome, findPostById, addPost, removePost }
