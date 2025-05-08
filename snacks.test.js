@@ -39,21 +39,22 @@ test('La funzione createSlug sostituisce gli spazi con -', () => {
 // 🏆 Snack 5
 // Creare un test che verifichi la seguente descrizione:
 // 👉 "La funzione isPalindrome verifica se una stringa è un palindromo."
+// 📌 Nota: una stringa palindroma è una sequenza di caratteri che si legge uguale sia da sinistra a destra che da destra a sinistra.
 
 test('La funzione isPalindrome verifica se una stringa è un palindromo', () => {
     expect(isPalindrome("otto")).toBeTruthy();
     expect(isPalindrome("ciao")).toBeFalsy();
-    expect(isPalindrome("Otto")).toBeFalsy();
+    expect(isPalindrome("Anna")).toBeTruthy();
 })
-
-// 📌 Nota: una stringa palindroma è una sequenza di caratteri che si legge uguale sia da sinistra a destra che da destra a sinistra.
-
-
 
 // 🏆 Snack 6
 // Creare un test che verifichi la seguente descrizione:
-
 // 👉 "La funzione createSlug lancia un errore se il titolo è vuoto o non valido."
+
+test('La funzione createSlug lancia un errore se il titolo è vuoto o non valido', () => {
+    expect(() => reateSlug("")).toThrow();
+    expect(() => reateSlug(null)).toThrow();
+})
 
 // 🏆 Snack 7
 // Crea un array di oggetti posts, in cui ogni oggetto ha le proprietà id, title e slug.
