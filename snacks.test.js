@@ -52,6 +52,12 @@ describe('Operazioni su Array', () => {
         removePost(posts, 2);
         expect(posts).toHaveLength(1);
     })
+
+    // 🎯 Snack 9(Bonus)
+    test('Se si tenta di aggiungere un post con un id o uno slug già esistente, la funzione addPost deve lanciare un errore', () => {
+        expect(() => addPost(posts, { id: 2, title: "Post di test", slug: "post-di-test" })).toThrow('Id già esistente');
+        expect(() => addPost(posts, { id: 3, title: "React Hooks", slug: "react-hooks" })).toThrow('Slug già esistente');
+    })
 });
 
 describe('Generazione di Slug', () => {
@@ -71,17 +77,3 @@ describe('Generazione di Slug', () => {
         expect(() => createSlug(null)).toThrow("Titolo non valido");
     });
 })
-
-// 🎯 Snack 9(Bonus)
-// Creare un test che verifichi la seguente descrizione:
-
-// 👉 "Se si tenta di aggiungere un post con un id o uno slug già esistente, la funzione addPost deve lanciare un errore."
-
-// 📌 Nota:
-
-// Gli errori devono essere chiari e distinti, es. "Slug già esistente" e “Id già esistente”.
-// 🎯 Snack 10(Bonus): createSlug() – Incrementare lo slug se esiste già
-// Creare un test che verifichi la seguente descrizione:
-
-// 👉 "Se viene passato un array di post come secondo argomento, la funzione createSlug incrementa di 1 se lo slug esiste già."
-
